@@ -24,6 +24,8 @@ module.exports = function tart(grunt) {
                 path: 'target'
             }
         });
+        grunt.config.set('cordovacli.options', options.cordova);
+
         var level = grunt.option('link') ? 'dev' : 'production';
         var platform = grunt.option('web') ? 'web' : 'device';
         var env = grunt.option('env') || 'test';
@@ -35,10 +37,18 @@ module.exports = function tart(grunt) {
             grunt.warn('Unknown environment.\n');
         }
 
+        if (!grunt.file.isDir(options.cordova.path)) {
+            grunt.log.writeln('Cordova target has not been created yet, trying to create automatically.');
+            grunt.config.set('cordovacli.autoCreate', {
+                options: {
+                    command: 'create'
+                }
+            });
+            grunt.task.run('cordovacli:autoCreate');
+        }
+
         if (!grunt.file.isDir(options.cordova.path, 'platforms', target)) {
             grunt.log.writeln('"' + target + '" platform not found, trying to add automatically.');
-            grunt.log.writeln(JSON.stringify(options));
-            grunt.config.set('cordovacli.options', options.cordova);
             grunt.config.set('cordovacli.autoAddPlatform', {
                 options: {
                     command: 'platform',
