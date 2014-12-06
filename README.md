@@ -20,10 +20,12 @@ Once the plugin has been installed, it may be enabled inside your Gruntfile with
 grunt.loadNpmTasks('grunt-tart');
 ```
 
-## The "tart" task
+## "tart", the builder task
 
 ### Overview
 In your project's Gruntfile, add a section named `tart` to the data object passed into `grunt.initConfig()`.
+It is not necessary to add each Cordova platform as targets in order to build them.
+They are populated while grunt-task is loading.
 
 ```js
 grunt.initConfig({
@@ -82,9 +84,26 @@ These options passed into [grunt-cordovacli](https://github.com/csantanapr/grunt
 
 (Coming soon)
 
+## "plugin", the manager task
+
+### Overview
+
+This tasks does not need any configuration.
+
+Usage is simple as `cordova plugin add/rm` command:
+
+`grunt plugin:(add|rm):(plugin-id|git-url|eg: org.apache.cordova.device)[:version]`
+
+Omit version to download latest.
+
+All added plugins will be persisted into `package.json` under `cordovaPlugins`.
+
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
 
-* Initial release (06/12/2014 02:36)
+- **v0.2.0** *(06/12/2014 07:22)*
+    - Added 'plugin' task for managing Cordova plugins persisted in `package.json`.
+
+- Initial release **v0.1.0** *(06/12/2014 02:36)*
