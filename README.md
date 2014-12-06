@@ -1,5 +1,7 @@
-# grunt-tart [![Build Status](https://img.shields.io/travis/cakuki/grunt-tart.svg?style=flat-square)](https://travis-ci.org/cakuki/grunt-tart)
+# grunt-tart [![Build Status](https://img.shields.io/travis/cakuki/grunt-tart.svg?style=flat-square)](https://travis-ci.org/cakuki/grunt-tart) [![Stability: Experimental](http://img.shields.io/badge/stability-experimental-orange.svg?style=flat-square)](http://nodejs.org/api/documentation.html#documentation_stability_index)
 > tartJS + Cordova build plugin.
+
+CAUTION! Currently requires some grunt tasks to be installed and configured. Initial state intended to work in [tartjs-mobile-demo](https://github.com/tart/tartjs-mobile-demo) only.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.5`
