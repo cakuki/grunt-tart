@@ -1,7 +1,7 @@
 {
   "name": "grunt-tart",
   "description": "tartJS + Cordova build plugin.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/cakuki/grunt-tart",
   "author": {
     "name": "Can Kutlu Kinay",

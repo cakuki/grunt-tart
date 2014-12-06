@@ -26,6 +26,9 @@ module.exports = function tart(grunt) {
         });
         grunt.config.set('cordovacli.options', options.cordova);
 
+        var plugins = grunt.file.isFile('package.json') && grunt.file.readJSON('package.json')['cordovaPlugins'];
+        plugins = Array.isArray(plugins) ? plugins : [];
+
         var level = grunt.option('link') ? 'dev' : 'production';
         var platform = grunt.option('web') ? 'web' : 'device';
         var env = grunt.option('env') || 'test';
@@ -56,7 +59,17 @@ module.exports = function tart(grunt) {
                     platforms: [target]
                 }
             });
-            grunt.task.run('cordovacli:autoAddPlatform');
+
+            if (plugins.length) {
+                grunt.config.set('cordovacli.autoAddPlugins', {
+                    options: {
+                        command: 'plugin',
+                        action: 'add',
+                        plugins: plugins
+                    }
+                });
+                grunt.task.run('cordovacli:autoAddPlugins');
+            }
         }
 
         if (grunt.option('no-run') && grunt.option('release')) {
