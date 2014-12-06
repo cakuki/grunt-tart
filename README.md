@@ -1,5 +1,4 @@
-# grunt-tart
-
+# grunt-tart [![Build Status](https://img.shields.io/travis/cakuki/grunt-tart.svg?style=flat-square)](https://travis-ci.org/cakuki/grunt-tart)
 > tartJS + Cordova build plugin.
 
 ## Getting Started
