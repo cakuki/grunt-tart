@@ -13,13 +13,25 @@ var parseOptions = require('../lib/parseOptions');
 
 module.exports = function tart(grunt) {
 
+    grunt.loadNpmTasks('grunt-cordovacli');
+
+    var conf = grunt.config.get('tart');
+    if (!conf)
+        grunt.config.set('tart', conf = {});
+
+    ['android', 'ios', 'wp8'].forEach(function(target) {
+        if (!conf[target])
+            grunt.config.set('tart.' + target, {});
+    });
+
+
     grunt.registerMultiTask('tart', 'tartJS + Cordova build plugin.', function() {
         var options = this.options({
             compilerDefs: {
                 'goog.DEBUG': true
             },
             cordova: {
-                id: 'com.tart.example-app',
+                id: 'com.tart.exampleapp',
                 name: 'Example tartJS App',
                 path: 'target'
             }
@@ -27,7 +39,11 @@ module.exports = function tart(grunt) {
         grunt.config.set('cordovacli.options', options.cordova);
 
         var plugins = grunt.file.isFile('package.json') && grunt.file.readJSON('package.json')['cordovaPlugins'];
-        plugins = Array.isArray(plugins) ? plugins : [];
+        if (plugins) {
+            plugins = Object.keys(plugins).map(function(id) {
+                return id + '@' + plugins[id];
+            });
+        }
 
         var level = grunt.option('link') ? 'dev' : 'production';
         var platform = grunt.option('web') ? 'web' : 'device';
@@ -48,6 +64,16 @@ module.exports = function tart(grunt) {
                 }
             });
             grunt.task.run('cordovacli:autoCreate');
+            if (plugins.length) {
+                grunt.config.set('cordovacli.autoAddPlugins', {
+                    options: {
+                        command: 'plugin',
+                        action: 'add',
+                        plugins: plugins
+                    }
+                });
+                grunt.task.run('cordovacli:autoAddPlugins');
+            }
         }
 
         if (!grunt.file.isDir(options.cordova.path, 'platforms', target)) {
@@ -60,16 +86,7 @@ module.exports = function tart(grunt) {
                 }
             });
 
-            if (plugins.length) {
-                grunt.config.set('cordovacli.autoAddPlugins', {
-                    options: {
-                        command: 'plugin',
-                        action: 'add',
-                        plugins: plugins
-                    }
-                });
-                grunt.task.run('cordovacli:autoAddPlugins');
-            }
+            grunt.task.run('cordovacli:autoAddPlatform');
         }
 
         if (grunt.option('no-run') && grunt.option('release')) {
