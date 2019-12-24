@@ -38,7 +38,7 @@
   "peerDependencies": {
     "grunt": ">=0.4.0",
     "grunt-cordovacli": "^0.5.1",
-    "lodash": "^2.4.1"
+    "lodash": "^4.17.15"
   },
   "keywords": [
     "gruntplugin",
@@ -47,7 +47,7 @@
   "dependencies": {
     "grunt": "~0.4.5",
     "grunt-cordovacli": "^0.5.1",
-    "lodash": "^2.4.1"
+    "lodash": "^4.17.15"
   },
   "files": [
     "lib",
